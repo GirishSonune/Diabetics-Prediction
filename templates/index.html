@@ -1,1 +1,95 @@
-<h1>Welcome to the home page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Diabetes Prediction</title>
+  <style>
+    body {
+      background: #f7f7f7;
+      font-family: Arial, sans-serif;
+    }
+    .login {
+      background: #fff;
+      padding: 30px 40px;
+      margin: 60px auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 400px;
+      text-align: center;
+    }
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:disabled {
+      background: #aaa;
+    }
+    .spinner {
+      display: none;
+      margin: 15px auto;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007bff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .alert {
+      margin: 20px auto;
+      padding: 15px;
+      background: #e7f3fe;
+      color: #31708f;
+      border: 1px solid #bce8f1;
+      border-radius: 5px;
+      width: 90%;
+      font-size: 18px;
+    }
+  </style>
+  <script>
+    function showSpinner() {
+      document.getElementById('spinner').style.display = 'block';
+      document.getElementById('predictBtn').disabled = true;
+    }
+  </script>
+</head>
+<body>
+ <div class="login">
+  <h1>Diabetes Prediction</h1>
+  <form action="{{ url_for('predict_datapoint')}}" method="post" onsubmit="showSpinner()">
+    <input type="text" name="Pregnancies" placeholder="Pregnancies" required /><br>
+    <input type="text" name="Glucose" placeholder="Glucose" required /><br>
+    <input type="text" name="BloodPressure" placeholder="Blood Pressure" required /><br>
+    <input type="text" name="SkinThickness" placeholder="Skin Thickness" required /><br>
+    <input type="text" name="Insulin" placeholder="Insulin" required /><br>
+    <input type="text" name="BMI" placeholder="BMI" required /><br>
+    <input type="text" name="DiabetesPedigreeFunction" placeholder="Diabetes Pedigree Function" required /><br>
+    <input type="text" name="Age" placeholder="Age" required /><br>
+    <button id="predictBtn" type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    <div id="spinner" class="spinner"></div>
+  </form>
+  {% if result %}
+    <div class="alert">
+      <strong>Prediction:</strong> {{ result }}
+    </div>
+  {% endif %}
+ </div>
+</body>
+</html>
